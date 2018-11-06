@@ -8,7 +8,14 @@ class CocktailsContainer extends Component {
   render(){
     return (
       <div className="container">
-      
+      {
+        this.props.currentCocktail ?
+          <CocktailDisplay currentCocktail={this.props.currentCocktail} />
+          : null
+
+        }
+
+      <CocktailsList handleCocktailClick={this.props.handleCocktailClick} allCocktails={this.props.allCocktails} />
       </div>
     )
   }
