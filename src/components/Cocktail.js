@@ -1,14 +1,12 @@
-import React from 'react'
-import  { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
-import CocktailDisplay from './CocktailDisplay'
+import React from "react";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import CocktailDisplay from "./CocktailDisplay";
 
-const Cocktail = (props) => {
-  return (
-      <li onClick={props.handleCocktailClick}
-      >
-
-      {props.cocktail.name}</li>
-  )
+export default class Cocktail extends React.Component {
+  handleClick = id => {
+    this.props.handleCocktailClick(this.props.cocktail.id);
+  };
+  render() {
+    return <li onClick={this.handleClick}>{this.props.cocktail.name}</li>;
+  }
 }
-
-export default Cocktail

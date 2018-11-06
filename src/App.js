@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import CocktailsContainer from './components/CocktailsContainer'
-import  { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import CocktailsContainer from "./components/CocktailsContainer";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import Form from "./components/Form.js";
 
 class App extends Component {
   constructor() {
@@ -12,46 +13,56 @@ class App extends Component {
       allIngredients: [],
       allProportions: [],
       currentCocktail: {}
-    }
+    };
   }
 
-  handleCocktailClick = () => {
-    console.log('clicked')
-  }
+  handleCocktailClick = id => {
+    let currentCocktail = this.state.allCocktails.find(
+      cocktail => cocktail.id === id
+    );
+    this.setState({
+      currentCocktail: currentCocktail
+    });
+  };
 
   componentDidMount() {
-    fetch('https://react-boozer-backend.herokuapp.com/api/v1/cocktails')
+    fetch("https://react-boozer-backend.herokuapp.com/api/v1/cocktails")
       .then(response => response.json())
-        .then(data => {
-          console.log(data)
-          this.setState({
-            allCocktails: data,
-            currentCocktail: data[0]
-          })
-          console.log(this.state.currentCocktail)
-        })
-    fetch('https://react-boozer-backend.herokuapp.com/api/v1/ingredients')
-    .then(response => response.json())
       .then(data => {
-
+        console.log(data);
+        this.setState({
+          allCocktails: data,
+          currentCocktail: data[0]
+        });
+        console.log(this.state.currentCocktail);
+      });
+    fetch("https://react-boozer-backend.herokuapp.com/api/v1/ingredients")
+      .then(response => response.json())
+      .then(data => {
         this.setState({
           allIngredients: data
-        })
-      })
-      fetch('https://react-boozer-backend.herokuapp.com/api/v1/proportions')
+        });
+      });
+    fetch("https://react-boozer-backend.herokuapp.com/api/v1/proportions")
       .then(response => response.json())
-        .then(data => {
-
-          this.setState({
-            allProportions: data
-          })
-        })
-
+      .then(data => {
+        this.setState({
+          allProportions: data
+        });
+      });
   }
 
   render() {
     return (
-      <CocktailsContainer currentCocktail={this.state.currentCocktail} allCocktails={this.state.allCocktails} handleCocktailClick={this.handleCocktailClick}/>
+      <div>
+        <Form />
+
+        <CocktailsContainer
+          currentCocktail={this.state.currentCocktail}
+          allCocktails={this.state.allCocktails}
+          handleCocktailClick={this.handleCocktailClick}
+        />
+      </div>
     );
   }
 }
